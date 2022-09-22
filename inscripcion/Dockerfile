@@ -1,7 +1,9 @@
 FROM openjdk:18.0.2.1-jdk
+FROM maven:3.8.6-openjdk-18
 
 WORKDIR /app
-COPY ./target/inscripcion-0.0.1-SNAPSHOT.jar /app
+COPY . /app/
 
 EXPOSE 8071
-CMD ["java", "-jar", "inscripcion-0.0.1-SNAPSHOT.jar"]
+
+CMD ["mvn", "spring-boot:run"]

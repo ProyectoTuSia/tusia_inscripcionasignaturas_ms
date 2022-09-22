@@ -1,0 +1,9 @@
+FROM mysql:5.7
+
+ENV MYSQL_TCP_PORT=8070
+ENV MYSQL_ROOT_PASSWORD=123
+ENV MYSQL_DATABASE=tusia_inscripcionasignaturas_db
+ENV MYSQL_USER=tusia_inscripcionasignaturas
+ENV MYSQL_PASSWORD=2022
+
+EXPOSE 8070

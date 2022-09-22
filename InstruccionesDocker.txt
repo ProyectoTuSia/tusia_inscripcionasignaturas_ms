@@ -1,0 +1,47 @@
+1. Instrucciones para desplegar el contenedor tusia_inscripcionasignaturas_db
+	1.1. Ir a la carpeta ./tusia_inscripcionasignaturas
+	1.2. Acceder a la consola de comandos y realizar el siguiente comando
+	para crear la imagen de Docker que esta en el Dockerfile de la carpeta ./tusia_inscripcionasignaturas:
+	
+	docker build -t tusia_inscripcionasignaturas_db .
+	
+	1.3. Crear el contenedor a partir de la imagen del anterior paso. 
+	El contenedor se ejecutara en el puerto 8070 del computador. Para crear y ejecutar el 
+	contenedor ejecutar el siguiente comando:
+
+	docker run -d -t -i -p 8070:8070 --name tusia_inscripcionasignaturas_db tusia_inscripcionasignaturas_db
+
+2. Instrucciones para desplegar el contenedor phpmyadmin para visualizar la base de datos
+	2.1. Ejecutar el siguiente comando para crear el contenedor con phpmyadmin y conectarlo a la 
+	base de datos creada en el anterior paso. El contenedor se ejecuta en puerto 8072
+	
+	docker run -d --name phpmyadmin -e PMA_HOST=host.docker.internal -e PMA_PORT=8070 -p 8072:80 phpmyadmin
+
+	Se puede acceder a phpmyadmin desde la url: http://localhost:8072/
+
+	NOTA: Si no sirve host.docker.internal, PMA_HOST=X
+	Siendo X la ip del contendor de la base de datos tusia_inscripcionasignaturas_db
+
+3. Instrucciones para desplegar el contenedor tusia_inscripcionasignaturas_ms
+	3.1. Ir a la carpeta ./inscripcion
+	3.2. En dicha carpeta se encuentra el proyecto de spring de la aplicacion y el archivo Dockerfile
+	que permitira crear su imagen.
+	3.3. Acceder a la consola de comandos y realizar el siguiente comando
+	para crear la imagen de Docker que esta en el Dockerfile de la carpeta ./inscripcion:
+	
+	docker build -t tusia_inscripcionasignaturas_ms . 
+
+	3.4. Crear el contenedor a partir de la imagen del anterior paso. 
+	El contenedor se ejecutara en el puerto 8071 del computador. Para crear y ejecutar el 
+	contenedor ejecutar el siguiente comando:
+
+	docker run -it -p 8071:8071 -e DB_HOST=host.docker.internal -e DB_PORT=8070 -e DB_USER=tusia_inscripcionasignaturas -e DB_PASSWORD=2022 --name tusia_inscripcionasignaturas_ms tusia_inscripcionasignaturas_ms
+
+	NOTA: Si no sirve host.docker.internal, DB_HOST=X
+	Siendo X la ip del contendor de la base de datos tusia_inscripcionasignaturas_db
+	NOTA 2: Es normal que la primera vez al ejecutar se demore (2 o 3 minutos) debido a que 
+	tiene que instalar muchas cosas de maven
+
+	3.5 Hacer peticiones :)
+	
+	
