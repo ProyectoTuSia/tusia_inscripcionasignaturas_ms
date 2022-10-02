@@ -20,6 +20,9 @@ public interface CareerHasSubjectRepository extends CrudRepository<CareerHasSubj
     @Query(value = "SELECT * FROM career_has_subject WHERE typology= :typology AND career_code= :career_code ;", nativeQuery = true)
     ArrayList<CareerHasSubjectModel> findCareerHasSubjectByTypAndCarCode(@Param("typology") String typology, @Param("career_code") Integer career_code);
 
+    @Query(value = "SELECT * FROM career_has_subject WHERE career_code= :career_code AND subject_code NOT IN (SELECT subject_code FROM student_coursed_subject WHERE student_username= :username);", nativeQuery = true)
+    ArrayList<CareerHasSubjectModel> findNotCoursedSubjectInCareerOfStudent(@Param("username") String username, @Param("career_code") Integer career_code);
+
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO career_has_subject VALUES ( :typology , :subject_code , :career_code) ;", nativeQuery = true)

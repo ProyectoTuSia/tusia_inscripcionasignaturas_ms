@@ -25,6 +25,11 @@ public class CareerHasSubjectService {
         return careerHasSubjectRepository.findCareerHasSubjectByTypAndCarCode(typology,career_code);
     }
 
+    //Encontrar asignaturas que no ha cursado un estudiante en una carrera
+    public ArrayList<CareerHasSubjectModel> findNotCoursedSubjectInCareerOfStudent(String username, Integer career_code){
+        return careerHasSubjectRepository.findNotCoursedSubjectInCareerOfStudent(username, career_code);
+    }
+
     public boolean insertIntoCareerHasSubject(String typology, Integer subject_code, Integer career_code){
         try{
             careerHasSubjectRepository.insertIntoCareerHasSubject(typology,subject_code,career_code);

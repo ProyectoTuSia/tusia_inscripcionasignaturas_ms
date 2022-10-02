@@ -25,6 +25,11 @@ public class CareerHasSubjectController {
         return careerHasSubjectService.findCareerHasSubjectByTypAndCarCode(careerHasSubjectDTO.getTypology(),careerHasSubjectDTO.getCareer_code());
     }
 
+    @GetMapping("/not/{career_code}/{username}")
+    public ArrayList<CareerHasSubjectModel> findNotCoursedSubjectInCareerOfStudent(@PathVariable("career_code") Integer career_code, @PathVariable("username") String username){
+        return careerHasSubjectService.findNotCoursedSubjectInCareerOfStudent(username, career_code);
+    }
+
     @PostMapping()
     public String insertIntoCareerHasSubject(@RequestBody CareerHasSubjectDTO careerHasSubjectDTO){
         boolean ok = careerHasSubjectService.insertIntoCareerHasSubject(careerHasSubjectDTO.getTypology(),careerHasSubjectDTO.getSubject_code(),careerHasSubjectDTO.getCareer_code());
