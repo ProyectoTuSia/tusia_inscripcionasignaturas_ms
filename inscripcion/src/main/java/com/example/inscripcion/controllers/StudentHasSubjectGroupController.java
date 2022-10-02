@@ -25,25 +25,28 @@ public class StudentHasSubjectGroupController {
         return studentHasSubjectGroupService.findStudentsInSubjectGroup(group_number,subject_code);
     }
 
+
     @PostMapping()
     public Boolean insertIntoStudentHasSubjectGroup(@RequestBody ArrayList<StudentHasSubjectGroupDTO> listStudentHasSubjectGroupDTO){
-        boolean ok = studentHasSubjectGroupService.insertIntoStudentHasSubjectGroup(listStudentHasSubjectGroupDTO);
-        if(ok){
-            //El estudiante si se pudo unir, entonces retornar un true
+        try{
+            //Intentar insertar la lista de grupos del estudiante
+            studentHasSubjectGroupService.insertIntoStudentHasSubjectGroup(listStudentHasSubjectGroupDTO);
             return true;
-        }else{
-            //El estudiante no se pudo unir, puede ser que ya estaba o que ya no hay cupos
+        }catch(Exception err){
+            //No se pudo realizar la insercion de la lista de grupos del estudiante
             return false;
         }
     }
 
-    @DeleteMapping("/{subject_code}/{group_number}/{username}")
-    public String deleteStudentHasSubjectGroup(@PathVariable("subject_code") Integer subject_code, @PathVariable("group_number") Integer group_number, @PathVariable("username") String username){
-        boolean ok = studentHasSubjectGroupService.deleteStudentHasSubjectGroup(group_number,subject_code,username);
-        if(ok){
-            return "Register was deleted";
-        }else{
-            return "The indicated register did not exist in the database";
+    @DeleteMapping()
+    public Boolean deleteStudentHasSubjectGroup(@RequestBody ArrayList<StudentHasSubjectGroupDTO> listStudentHasSubjectGroupDTO){
+        try {
+            //Intentar borrar una lista de grupos del estudiante
+            studentHasSubjectGroupService.deleteStudentHasSubjectGroup(listStudentHasSubjectGroupDTO);
+            return true;
+        }catch(Exception err){
+            //Se intento eliminar un estudiante de un grupo en el que no estaba
+            return false;
         }
     }
 }
