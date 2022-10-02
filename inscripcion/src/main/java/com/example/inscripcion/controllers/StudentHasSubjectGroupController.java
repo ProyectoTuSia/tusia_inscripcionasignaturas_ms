@@ -26,12 +26,14 @@ public class StudentHasSubjectGroupController {
     }
 
     @PostMapping()
-    public String insertIntoStudentHasSubjectGroup(@RequestBody StudentHasSubjectGroupDTO studentHasSubjectGroupDTO){
-        boolean ok = studentHasSubjectGroupService.insertIntoStudentHasSubjectGroup(studentHasSubjectGroupDTO.getSubject_group_number(),studentHasSubjectGroupDTO.getSubject_group_subject_code(),studentHasSubjectGroupDTO.getStudent_username());
+    public Boolean insertIntoStudentHasSubjectGroup(@RequestBody ArrayList<StudentHasSubjectGroupDTO> listStudentHasSubjectGroupDTO){
+        boolean ok = studentHasSubjectGroupService.insertIntoStudentHasSubjectGroup(listStudentHasSubjectGroupDTO);
         if(ok){
-            return "The student joined the group";
+            //El estudiante si se pudo unir, entonces retornar un true
+            return true;
         }else{
-            return "The student could not be joined to the group or was already joined to the group";
+            //El estudiante no se pudo unir, puede ser que ya estaba o que ya no hay cupos
+            return false;
         }
     }
 

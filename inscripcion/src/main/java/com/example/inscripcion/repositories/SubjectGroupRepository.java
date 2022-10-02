@@ -28,6 +28,16 @@ public interface SubjectGroupRepository extends CrudRepository<SubjectGroupModel
 
     @Modifying
     @Transactional
+    @Query(value = "UPDATE subject_group SET slots=slots-1 WHERE subject_code= :subject_code AND number= :number ;", nativeQuery=true)
+    int decreaseOneSubjectGroupSlots(@Param("number") int number, @Param("subject_code") int subject_code);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE subject_group SET slots=slots+1 WHERE subject_code= :subject_code AND number= :number ;", nativeQuery=true)
+    int increaseOneSubjectGroupSlots(@Param("number") int number, @Param("subject_code") int subject_code);
+
+    @Modifying
+    @Transactional
     @Query(value = "DELETE FROM subject_group WHERE number= :number AND subject_code= :subject_code ;", nativeQuery = true)
     int deleteSubjectGroup(@Param("number") int number, @Param("subject_code") int subject_code);
 }
